@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BCH Survey: Teacher Version</title>
+    <style type="text/css">
+        body {
+            background-image: url("backgroundImage.jpg");
+            background-color: white;
+            text-align:left;
+        }
+        h1 {
+            font-family: "Corbel";
+            text-align:center;
+            color: rgb(207,0,103);
+        }
+        form {
+            font-family: "Consolas";
+            color: rgb(36,64,79);
+            text-align:center;
+            font-weight:bold;
+            font-size: 14pt;
+        }
+        p {
+            font-family: "Corbel";
+            color: rgb(36,64,79);
+            font-size: 16pt;
+        }
+        input {
+            color: rgb(29,120,144);
+            font-family: "Consolas";
+            font-size: 20pt;
+        }
+    </style>
+    <script>
+        function generate(){
+            try {
+                var amt = parseInt(document.getElementById("numInput").value);
+                var code = "" + document.getElementById("numInput").value;
+                var bs;
+                var cs;
+                var hs;
+                if(document.getElementById("bInput") != ""){
+                    bs = document.getElementById("bInput").value.split(",");
+                }
+                if(document.getElementById("cInput") != ""){
+                    cs = document.getElementById("cInput").value.split(",");
+                }
+                if(document.getElementById("hInput") != ""){
+                    hs = document.getElementById("hInput").value.split(",");
+                }
+                for(i = 0; i < bs.length; i++){
+                    if(0 < parseInt(bs[i]) && parseInt(bs[i]) <= amt){
+                        code += ".X" + bs[i];
+                    }
+                }
+                for(i = 0; i < cs.length; i++){
+                    if(0 < parseInt(cs[i]) && parseInt(cs[i]) <= amt){
+                        code += ".Y" + cs[i];
+                    }
+                }
+                for(i = 0; i < hs.length; i++){
+                    if(0 < parseInt(bs[i]) && parseInt(hs[i]) <= amt){
+                        code += ".Z" + hs[i];
+                    }
+                }
+            }
+            catch(err) {
+                document.getElementById("errors").innerHTML = "There was an error! Make sure there are no spaces between your numbers and no letters or symbols.";
+            }
+            document.getElementById("output").innerHTML = code;
+            document.getElementById("errors").innerHTML = "Copy and paste the code above into the student program to activate your quiz.";
+        }
+    </script>
+</head>
+<body>
+    <h1>Survey for Teacher</h1>
+    <form id="numQuestions">
+        Enter number of questions:
+        <input type=text id="numInput" value="20" onclick="this.select();"><br>
+        <span id="NumBox"></span>
+    </form>
+    <form id="categories">
+        Input all question numbers that belongs in each category. Separate the numbers with commas. Example: 1,3,7,11,19,20<br>
+        <br>
+        Biological:<input type=text id="bInput" value=""><br>
+        Cognitive :<input type=text id="cInput" value=""><br>
+        Humanistic:<input type=text id="hInput" value=""><br>
+        <br>
+        <input type=button id="confirm" value="Confirm" onclick="generate()">
+        <span id="CategoryBox"></span>
+    </form>
+    <p id="output"></p>
+    <p id="errors"></p>
+</body>
+</html>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

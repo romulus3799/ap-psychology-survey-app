@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BCH Survey: Student Version</title>
+    <style type="text/css">
+        body {
+            background-color: white;
+            text-align:left;
+        }
+        h1 {
+            font-family: "Britannic Bold";
+            text-align:left;
+            color: rgb(207,0,103);
+        }
+        form {
+            font-family: "Britannic Bold";
+            color: rgb(36,64,79);
+            text-align:left;
+            font-weight:bold;
+            font-size: 14pt;
+        }
+        p {
+            font-family: "Britannic Bold";
+            color: rgb(36,64,79);
+            font-size: 16pt;
+        }
+        input {
+            color: rgb(29,120,144);
+            font-family: "Consolas";
+            font-size: 20pt;
+        }
+        
+    </style>
+    <script>
+        var options = [1,2,3,4,5,6,7];
+        var data;
+        
+        function activate(){
+            var code = document.getElementById("code").value;
+            if(code.length != 0){
+                document.getElementById("buttonCode").disabled = true;
+            }
+            
+            data = code.split(".");
+            var numQuestions = parseInt(data[0]);
+            
+            document.getElementById("quizTitle").innerHTML = "Start Survey: Select a number from 1-7 for each question.";
+            try{
+                for(var i = 1; i <= numQuestions; i++){
+                    //create and append question text
+                    var para = document.createElement("form");
+                    para.id = "question" + i;
+                    para.appendChild(
+                        document.createTextNode(i + ".   "));
+                    document.getElementById("quiz").insertBefore(para,bResult);
+                    
+                    //create and append select node
+                    var selectList = document.createElement("select");
+                    selectList.id = "select" + i;
+                    document.getElementById("question" + i).appendChild(selectList);
+                    
+                    //create and add options to select node
+                    for(var x = 0; x < options.length; x++) {
+                        var option = document.createElement("option");
+                        option.value = options[x];
+                        option.text = options[x];
+                        selectList.appendChild(option);
+                    }
+                }
+            } catch(err){
+                window.location.href = "http://stackoverflow.com/search?q=[js]+" + err.message;
+            }
+            
+            //create submit button
+            var submit = document.createElement("button");
+            submit.appendChild(document.createTextNode("Submit"));
+            
+            //generate results
+            submit.onclick = function(){
+                var bSum = 0;
+                var cSum = 0;
+                var hSum = 0;
+                
+                //add numbers to corresponding scores
+                for(var i = 1; i < data.length; i++){
+                    if(data[i].substring(0,1) == 'X'){
+                        var select = document.getElementById("select" + data[i].substring(1));
+                        bSum += parseInt(select.options[select.selectedIndex].value);
+                    }
+                    if(data[i].substring(0,1) == 'Y'){
+                        var select = document.getElementById("select" + data[i].substring(1));
+                        cSum += parseInt(select.options[select.selectedIndex].value);
+                    }
+                    if(data[i].substring(0,1) == 'Z'){
+                        var select = document.getElementById("select" + data[i].substring(1));
+                        hSum += parseInt(select.options[select.selectedIndex].value);
+                    }
+                }
+                
+                //add results
+                document.getElementById("bResult").innerHTML = "Biological Score: " + bSum;
+                document.getElementById("cResult").innerHTML = "Cognitive Score: " + cSum;
+                document.getElementById("hResult").innerHTML = "Humanistic Score: " + hSum;
+            };
+            document.getElementById("quiz").appendChild(submit);
+        }
+    </script>
+</head>
+<body>
+    <h1>Survey for Student</h1>
+    <form id="formCode">
+        Paste your activation code here:
+        <input type="text" id="code" value="">
+        <input type="button" id="buttonCode" value="Confirm Code" onclick="activate()">
+    </form>
+    <div id="quiz">
+        <br>
+        <p id="quizTitle"></p>
+        <p id="bResult"></p>
+        <p id="cResult"></p>
+        <p id="hResult"></p>
+    </div>
+</body>
+</html>
